@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: linear-gradient(145deg, #0a0e17 0%, #0f1520 50%, #161d2d 100%);
+  min-height: 100vh;
+  color: #e2e8f0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1520;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2840;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d3a54;
+}
+
+/* Flashcard flip animation */
+.perspective {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Glassmorphism card effect */
+.glass {
+  background: rgba(15, 21, 32, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Glow effects */
+.glow-amber {
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
+}
+
+.glow-teal {
+  box-shadow: 0 0 40px rgba(45, 212, 191, 0.15);
+}
+
+/* Gender badge colors */
+.gender-m {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.gender-f {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.gender-n {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+/* Word type badges */
+.type-noun { background: #1e40af; }
+.type-verb { background: #047857; }
+.type-adjective { background: #b45309; }
+.type-adverb { background: #7c3aed; }
+.type-preposition { background: #be185d; }
+.type-pronoun { background: #0891b2; }
+.type-conjunction { background: #4338ca; }
+.type-interjection { background: #dc2626; }
+.type-article { background: #525252; }
+.type-numeral { background: #0d9488; }
+
+/* Checkbox styling */
+.checkbox-amber:checked {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+}
+
