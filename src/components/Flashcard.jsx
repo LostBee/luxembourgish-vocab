@@ -1,4 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
+import { EditableField, EditableBadge } from './EditableField';
+
+const TYPE_OPTIONS = [
+  { value: 'noun', label: 'noun' },
+  { value: 'verb', label: 'verb' },
+  { value: 'adjective', label: 'adjective' },
+  { value: 'adverb', label: 'adverb' },
+  { value: 'preposition', label: 'preposition' },
+  { value: 'pronoun', label: 'pronoun' },
+  { value: 'conjunction', label: 'conjunction' },
+  { value: 'interjection', label: 'interjection' },
+  { value: 'article', label: 'article' },
+  { value: 'numeral', label: 'numeral' }
+];
+
+const GENDER_OPTIONS = [
+  { value: '', label: 'None' },
+  { value: 'm', label: 'Männlech (M)' },
+  { value: 'f', label: 'Wiiblech (F)' },
+  { value: 'n', label: 'Sächlech (N)' }
+];
 
 export function Flashcard({ 
   word, 
@@ -8,7 +29,8 @@ export function Flashcard({
   isDifficult, 
   isLearned,
   onToggleDifficult, 
-  onToggleLearned 
+  onToggleLearned,
+  onUpdateWord
 }) {
   const [animating, setAnimating] = useState(false);
 
@@ -23,6 +45,18 @@ export function Flashcard({
       setTimeout(() => setAnimating(false), 300);
     }
   };
+
+  const handleFieldUpdate = useCallback((field, value) => {
+    if (onUpdateWord && word) {
+      onUpdateWord(word.id, field, value);
+    }
+  }, [onUpdateWord, word]);
+
+  const handleNestedUpdate = useCallback((path, value) => {
+    if (onUpdateWord && word) {
+      onUpdateWord(word.id, path, value);
+    }
+  }, [onUpdateWord, word]);
 
   if (!word) {
     return (
@@ -39,6 +73,8 @@ export function Flashcard({
   const isFrontLux = frontLanguage === 'luxembourgish';
   const frontContent = isFrontLux ? word.luxembourgish : word.english;
   const backContent = isFrontLux ? word.english : word.luxembourgish;
+  const frontField = isFrontLux ? 'luxembourgish' : 'english';
+  const backField = isFrontLux ? 'english' : 'luxembourgish';
 
   // Determine which side shows Luxembourgish details
   const showLuxDetails = (isFrontLux && !isFlipped) || (!isFrontLux && isFlipped);
@@ -69,6 +105,26 @@ export function Flashcard({
     return badges[gender];
   };
 
+  // Render badges section (reusable for both sides)
+  const renderBadges = () => (
+    <div className="flex gap-2 flex-wrap items-center">
+      <EditableBadge
+        value={word.type}
+        onSave={(value) => handleFieldUpdate('type', value)}
+        options={TYPE_OPTIONS}
+        badgeClassName={`${getTypeColor(word.type)} px-3 py-1 rounded-full text-sm font-medium text-white`}
+      />
+      {(word.gender || word.type === 'noun') && (
+        <EditableBadge
+          value={word.gender || ''}
+          onSave={(value) => handleFieldUpdate('gender', value || null)}
+          options={GENDER_OPTIONS}
+          badgeClassName={`${word.gender ? getGenderBadge(word.gender)?.class : 'bg-slate-600'} px-3 py-1 rounded-full text-sm font-medium text-white`}
+        />
+      )}
+    </div>
+  );
+
   return (
     <div className="perspective w-full max-w-2xl mx-auto">
       {/* Card Container */}
@@ -84,16 +140,7 @@ export function Flashcard({
         } p-8 flex flex-col`}>
           {/* Top badges */}
           <div className="flex justify-between items-start mb-6">
-            <div className="flex gap-2 flex-wrap">
-              <span className={`${getTypeColor(word.type)} px-3 py-1 rounded-full text-sm font-medium text-white`}>
-                {word.type}
-              </span>
-              {word.gender && (
-                <span className={`${getGenderBadge(word.gender).class} px-3 py-1 rounded-full text-sm font-medium text-white`}>
-                  {getGenderBadge(word.gender).label}
-                </span>
-              )}
-            </div>
+            {renderBadges()}
             <span className="text-slate-500 text-sm">
               {isFrontLux ? '🇱🇺' : '🇬🇧'}
             </span>
@@ -102,7 +149,11 @@ export function Flashcard({
           {/* Main word */}
           <div className="flex-1 flex items-center justify-center">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-center text-white">
-              {frontContent}
+              <EditableField
+                value={frontContent}
+                onSave={(value) => handleFieldUpdate(frontField, value)}
+                inputClassName="text-3xl md:text-4xl font-display font-bold text-center w-full"
+              />
             </h2>
           </div>
 
@@ -118,16 +169,7 @@ export function Flashcard({
         } p-8 flex flex-col`}>
           {/* Top badges */}
           <div className="flex justify-between items-start mb-4">
-            <div className="flex gap-2 flex-wrap">
-              <span className={`${getTypeColor(word.type)} px-3 py-1 rounded-full text-sm font-medium text-white`}>
-                {word.type}
-              </span>
-              {word.gender && (
-                <span className={`${getGenderBadge(word.gender).class} px-3 py-1 rounded-full text-sm font-medium text-white`}>
-                  {getGenderBadge(word.gender).label}
-                </span>
-              )}
-            </div>
+            {renderBadges()}
             <span className="text-slate-500 text-sm">
               {!isFrontLux ? '🇱🇺' : '🇬🇧'}
             </span>
@@ -136,17 +178,28 @@ export function Flashcard({
           {/* Main translation */}
           <div className="flex-1 flex flex-col items-center justify-center">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-center text-white mb-6">
-              {backContent}
+              <EditableField
+                value={backContent}
+                onSave={(value) => handleFieldUpdate(backField, value)}
+                inputClassName="text-3xl md:text-4xl font-display font-bold text-center w-full"
+              />
             </h2>
 
             {/* Additional Luxembourgish info */}
             {showLuxDetails && (
               <div className="w-full space-y-4 mt-4">
                 {/* Plural form for nouns */}
-                {word.type === 'noun' && word.plural && (
+                {word.type === 'noun' && (
                   <div className="bg-midnight-800/50 rounded-xl p-4">
                     <span className="text-slate-400 text-sm">Plural:</span>
-                    <span className="ml-2 text-lg text-slate-200">{word.plural}</span>
+                    <span className="ml-2 text-lg text-slate-200">
+                      <EditableField
+                        value={word.plural}
+                        onSave={(value) => handleFieldUpdate('plural', value)}
+                        placeholder="No plural"
+                        inputClassName="text-lg"
+                      />
+                    </span>
                   </div>
                 )}
 
@@ -155,30 +208,101 @@ export function Flashcard({
                   <div className="bg-midnight-800/50 rounded-xl p-4">
                     <div className="text-slate-400 text-sm mb-3">Present Tense:</div>
                     <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div><span className="text-slate-500">ech:</span> <span className="text-slate-200">{word.verbForms.present.ech}</span></div>
-                      <div><span className="text-slate-500">mir:</span> <span className="text-slate-200">{word.verbForms.present.mir}</span></div>
-                      <div><span className="text-slate-500">du:</span> <span className="text-slate-200">{word.verbForms.present.du}</span></div>
-                      <div><span className="text-slate-500">dir:</span> <span className="text-slate-200">{word.verbForms.present.dir}</span></div>
-                      <div><span className="text-slate-500">hien/si:</span> <span className="text-slate-200">{word.verbForms.present.hien}</span></div>
-                      <div><span className="text-slate-500">si:</span> <span className="text-slate-200">{word.verbForms.present.si}</span></div>
-                    </div>
-                    {word.verbForms.pastParticiple && (
-                      <div className="mt-3 pt-3 border-t border-slate-700/50">
-                        <span className="text-slate-400 text-sm">Past Participle:</span>
-                        <span className="ml-2 text-slate-200">{word.verbForms.pastParticiple}</span>
+                      <div>
+                        <span className="text-slate-500">ech:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.ech}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.ech', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
                       </div>
-                    )}
+                      <div>
+                        <span className="text-slate-500">mir:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.mir}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.mir', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500">du:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.du}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.du', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500">dir:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.dir}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.dir', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500">hien/si:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.hien}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.hien', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500">si:</span>{' '}
+                        <span className="text-slate-200">
+                          <EditableField
+                            value={word.verbForms.present?.si}
+                            onSave={(value) => handleNestedUpdate('verbForms.present.si', value)}
+                            inputClassName="text-sm w-24"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-700/50">
+                      <span className="text-slate-400 text-sm">Past Participle:</span>
+                      <span className="ml-2 text-slate-200">
+                        <EditableField
+                          value={word.verbForms.pastParticiple}
+                          onSave={(value) => handleNestedUpdate('verbForms.pastParticiple', value)}
+                          placeholder="No past participle"
+                          inputClassName="text-sm"
+                        />
+                      </span>
+                    </div>
                   </div>
                 )}
 
                 {/* Example sentence */}
-                {word.example && (
-                  <div className="bg-midnight-800/50 rounded-xl p-4">
-                    <div className="text-slate-400 text-sm mb-2">Example:</div>
-                    <div className="text-slate-200 italic">"{word.example.lb}"</div>
-                    <div className="text-slate-400 text-sm mt-1">"{word.example.en}"</div>
+                <div className="bg-midnight-800/50 rounded-xl p-4">
+                  <div className="text-slate-400 text-sm mb-2">Example:</div>
+                  <div className="text-slate-200 italic">
+                    "<EditableField
+                      value={word.example?.lb}
+                      onSave={(value) => handleNestedUpdate('example.lb', value)}
+                      placeholder="Add Luxembourgish example"
+                      inputClassName="text-base italic"
+                    />"
                   </div>
-                )}
+                  <div className="text-slate-400 text-sm mt-1">
+                    "<EditableField
+                      value={word.example?.en}
+                      onSave={(value) => handleNestedUpdate('example.en', value)}
+                      placeholder="Add English translation"
+                      inputClassName="text-sm"
+                    />"
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -270,4 +394,3 @@ function CopyButton({ word }) {
     </button>
   );
 }
-

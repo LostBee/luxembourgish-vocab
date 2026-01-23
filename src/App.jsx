@@ -1,15 +1,49 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { words } from './data/words';
+import { words as baseWords } from './data/words';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { FilterPanel } from './components/FilterPanel';
 import { Flashcard } from './components/Flashcard';
 import { Navigation } from './components/Navigation';
 import { StatsBar } from './components/StatsBar';
 
+// Helper to set nested property by path string (e.g., 'verbForms.present.ech')
+function setNestedValue(obj, path, value) {
+  const keys = path.split('.');
+  const result = { ...obj };
+  let current = result;
+  
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    current[key] = current[key] ? { ...current[key] } : {};
+    current = current[key];
+  }
+  
+  current[keys[keys.length - 1]] = value;
+  return result;
+}
+
+// Merge base word with edits
+function mergeWordWithEdits(word, edits) {
+  if (!edits) return word;
+  
+  let merged = { ...word };
+  
+  for (const [path, value] of Object.entries(edits)) {
+    if (path.includes('.')) {
+      merged = setNestedValue(merged, path, value);
+    } else {
+      merged[path] = value;
+    }
+  }
+  
+  return merged;
+}
+
 function App() {
   // Persisted state
   const [difficultWords, setDifficultWords] = useLocalStorage('lux-difficult', []);
   const [learnedWords, setLearnedWords] = useLocalStorage('lux-learned', []);
+  const [wordEdits, setWordEdits] = useLocalStorage('lux-word-edits', {});
   
   // UI state
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,6 +60,25 @@ function App() {
     showOnlyUnlearned: false,
     shuffle: false
   });
+
+  // Merge base words with edits
+  const words = useMemo(() => {
+    return baseWords.map(word => mergeWordWithEdits(word, wordEdits[word.id]));
+  }, [wordEdits]);
+
+  // Handler to update a word field
+  const handleUpdateWord = useCallback((wordId, field, value) => {
+    setWordEdits(prev => {
+      const currentEdits = prev[wordId] || {};
+      return {
+        ...prev,
+        [wordId]: {
+          ...currentEdits,
+          [field]: value
+        }
+      };
+    });
+  }, [setWordEdits]);
 
   // Filtered words based on current filters
   const filteredWords = useMemo(() => {
@@ -57,7 +110,7 @@ function App() {
     }
 
     return result;
-  }, [filters, difficultWords, learnedWords]);
+  }, [filters, words, difficultWords, learnedWords]);
 
   // Apply shuffle if enabled
   const displayWords = useMemo(() => {
@@ -99,7 +152,7 @@ function App() {
     filtered: filteredWords.length,
     learned: learnedWords.length,
     difficult: difficultWords.length
-  }), [filteredWords.length, learnedWords.length, difficultWords.length]);
+  }), [words.length, filteredWords.length, learnedWords.length, difficultWords.length]);
 
   // Navigation handlers
   const goToNext = useCallback(() => {
@@ -152,8 +205,8 @@ function App() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignore if typing in input
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      // Ignore if typing in input or textarea
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
 
       switch (e.key) {
         case ' ':
@@ -230,6 +283,7 @@ function App() {
           isLearned={currentWord ? learnedWords.includes(currentWord.id) : false}
           onToggleDifficult={toggleDifficult}
           onToggleLearned={toggleLearned}
+          onUpdateWord={handleUpdateWord}
         />
 
         {/* Navigation */}
@@ -256,4 +310,3 @@ function App() {
 }
 
 export default App;
-
