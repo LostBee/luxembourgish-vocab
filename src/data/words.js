@@ -2307,6 +2307,445 @@ export const words = [
     category: "clothing",
     plural: "Turnschlappen",
     example: { lb: "Ech kafen nei Turnschlappen.", en: "I'm buying new sneakers." }
+  },
+
+  // === ADDITIONAL QUESTION WORDS ===
+  {
+    id: 226,
+    luxembourgish: "wat fir",
+    english: "what kind of / which",
+    type: "pronoun",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wat fir e Buch lies du?", en: "What kind of book are you reading?" }
+  },
+  {
+    id: 227,
+    luxembourgish: "wéi laang",
+    english: "how long",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi laang dauert dat?", en: "How long does that take?" }
+  },
+  {
+    id: 228,
+    luxembourgish: "wéi alt",
+    english: "how old",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi al bass du?", en: "How old are you?" }
+  },
+  {
+    id: 229,
+    luxembourgish: "wéi dacks",
+    english: "how often",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi dacks gees du an de Sport?", en: "How often do you go to the gym?" }
+  },
+  {
+    id: 230,
+    luxembourgish: "wéi wäit",
+    english: "how far",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi wäit ass et bis dohinner?", en: "How far is it to there?" }
+  },
+  {
+    id: 231,
+    luxembourgish: "wouhin",
+    english: "where to",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wouhin gees du?", en: "Where are you going?" }
+  },
+  {
+    id: 232,
+    luxembourgish: "woumat",
+    english: "with what",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Woumat schaffs du?", en: "What do you work with?" }
+  },
+  {
+    id: 233,
+    luxembourgish: "woufir",
+    english: "what for / for what purpose",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Woufir brauchs du dat?", en: "What do you need that for?" }
+  },
+  {
+    id: 234,
+    luxembourgish: "wiem",
+    english: "to whom (dative)",
+    type: "pronoun",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wiem gehéiert dat?", en: "To whom does that belong?" }
+  },
+  {
+    id: 235,
+    luxembourgish: "wisou",
+    english: "why / how come",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wisou bass du net komm?", en: "Why didn't you come?" }
+  },
+  {
+    id: 236,
+    luxembourgish: "wéi eng",
+    english: "which one (feminine)",
+    type: "pronoun",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi eng wëlls du?", en: "Which one do you want?" }
+  },
+  {
+    id: 237,
+    luxembourgish: "wéi een",
+    english: "which one (masculine)",
+    type: "pronoun",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéi een ass däin?", en: "Which one is yours?" }
+  },
+  {
+    id: 238,
+    luxembourgish: "wéisou",
+    english: "why / for what reason",
+    type: "adverb",
+    gender: null,
+    category: "questions",
+    example: { lb: "Wéisou muss dat sinn?", en: "Why does it have to be?" }
+  },
+
+  // === NEW VERBS ===
+  {
+    id: 239,
+    luxembourgish: "fänken",
+    english: "to catch (a person, an animal)",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "fänken", du: "fänks", hien: "fänkt", mir: "fänken", dir: "fänkt", si: "fänken" },
+      pastParticiple: "gefaangen/gefaang"
+    },
+    example: { lb: "D'Police huet den Déif gefaangen.", en: "The police caught the thief." }
+  },
+  {
+    id: 240,
+    luxembourgish: "fortlafen",
+    english: "to run away / to flee",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "lafen fort", du: "leefs fort", hien: "leeft fort", mir: "lafen fort", dir: "laaft fort", si: "lafen fort" },
+      pastParticiple: "fortgelaf"
+    },
+    example: { lb: "Den Hond ass fortgelaf.", en: "The dog ran away." }
+  },
+  {
+    id: 241,
+    luxembourgish: "fannen",
+    english: "to find",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "fannen", du: "fënns", hien: "fënnt", mir: "fannen", dir: "fannt", si: "fannen" },
+      pastParticiple: "fonnt"
+    },
+    example: { lb: "Ech hunn mäi Schlëssel fonnt.", en: "I found my key." }
+  },
+  {
+    id: 242,
+    luxembourgish: "bréngen",
+    english: "to bring / to deliver",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "bréngen", du: "bréngs", hien: "bréngt", mir: "bréngen", dir: "bréngt", si: "bréngen" },
+      pastParticiple: "bruecht"
+    },
+    example: { lb: "Ech hunn d'Pak bruecht.", en: "I delivered the package." }
+  },
+  {
+    id: 243,
+    luxembourgish: "verhaften",
+    english: "to arrest",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "verhaften", du: "verhafts", hien: "verhaft", mir: "verhaften", dir: "verhaft", si: "verhaften" },
+      pastParticiple: "verhaft"
+    },
+    example: { lb: "D'Police huet de Verdächtegen verhaft.", en: "The police arrested the suspect." }
+  },
+  {
+    id: 244,
+    luxembourgish: "flamen",
+    english: "to be in flames / to burn",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "flamen", du: "flams", hien: "flammt", mir: "flamen", dir: "flammt", si: "flamen" },
+      pastParticiple: "geflaamt"
+    },
+    example: { lb: "D'Gebai huet geflaamt.", en: "The building was in flames." }
+  },
+  {
+    id: 245,
+    luxembourgish: "stierwen",
+    english: "to die",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "stierwen", du: "stierfs", hien: "stierft", mir: "stierwen", dir: "stierft", si: "stierwen" },
+      pastParticiple: "gestuerwen"
+    },
+    example: { lb: "Hien ass un enger Krankheet gestuerwen.", en: "He died of an illness." }
+  },
+  {
+    id: 246,
+    luxembourgish: "ruffen",
+    english: "to call / to shout for",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "ruffen", du: "ruffs", hien: "rufft", mir: "ruffen", dir: "rufft", si: "ruffen" },
+      pastParticiple: "geruff"
+    },
+    example: { lb: "Si huet d'Police geruff.", en: "She called the police." }
+  },
+  {
+    id: 247,
+    luxembourgish: "landen",
+    english: "to land",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "landen", du: "lands", hien: "lant", mir: "landen", dir: "lant", si: "landen" },
+      pastParticiple: "gelant"
+    },
+    example: { lb: "D'Fliger ass gelant.", en: "The plane has landed." }
+  },
+  {
+    id: 248,
+    luxembourgish: "brauchen",
+    english: "to need",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "brauchen", du: "brauchs", hien: "brauch", mir: "brauchen", dir: "braucht", si: "brauchen" },
+      pastParticiple: "gebraucht"
+    },
+    example: { lb: "Ech brauchen Hëllef.", en: "I need help." }
+  },
+  {
+    id: 249,
+    luxembourgish: "geschéien",
+    english: "to happen",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "geschéien", du: "geschéis", hien: "geschitt", mir: "geschéien", dir: "geschitt", si: "geschéien" },
+      pastParticiple: "geschitt"
+    },
+    example: { lb: "Wat ass geschitt?", en: "What happened?" }
+  },
+  {
+    id: 250,
+    luxembourgish: "aklemmen",
+    english: "to trap / to get stuck",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "klemmen a", du: "klemms a", hien: "klemmt a", mir: "klemmen a", dir: "klemmt a", si: "klemmen a" },
+      pastParticiple: "ageklemmt"
+    },
+    example: { lb: "Säi Fouss war ageklemmt.", en: "His foot was trapped." }
+  },
+  {
+    id: 251,
+    luxembourgish: "schleideren",
+    english: "to be hurled / to spin / to skid",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "schleideren", du: "schleiders", hien: "schleidert", mir: "schleideren", dir: "schleidert", si: "schleideren" },
+      pastParticiple: "geschleidert"
+    },
+    example: { lb: "Den Auto ass géint de Bam geschleidert.", en: "The car was hurled against the tree." }
+  },
+  {
+    id: 252,
+    luxembourgish: "blesséieren",
+    english: "to injure",
+    type: "verb",
+    gender: null,
+    category: "emergencies",
+    verbForms: {
+      present: { ech: "blesséieren", du: "blesséiers", hien: "blesséiert", mir: "blesséieren", dir: "blesséiert", si: "blesséieren" },
+      pastParticiple: "blesséiert"
+    },
+    example: { lb: "Hien huet sech blesséiert.", en: "He injured himself." }
+  },
+  {
+    id: 253,
+    luxembourgish: "bleiwen",
+    english: "to stay / to remain",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "bleiwen", du: "bleifs", hien: "bleift", mir: "bleiwen", dir: "bleift", si: "bleiwen" },
+      pastParticiple: "bliwwen"
+    },
+    example: { lb: "Ech bleiwen doheem.", en: "I'm staying at home." }
+  },
+  {
+    id: 254,
+    luxembourgish: "schneiden",
+    english: "to cut",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "schneiden", du: "schnëtts", hien: "schnëtt", mir: "schneiden", dir: "schnëtt", si: "schneiden" },
+      pastParticiple: "geschnidden"
+    },
+    example: { lb: "Ech hunn mech geschnidden.", en: "I cut myself." }
+  },
+  {
+    id: 255,
+    luxembourgish: "spären",
+    english: "to close / to block",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "spären", du: "spiers", hien: "spiert", mir: "spären", dir: "spiert", si: "spären" },
+      pastParticiple: "gespaart"
+    },
+    example: { lb: "D'Strooss ass gespaart.", en: "The road is closed." }
+  },
+  {
+    id: 256,
+    luxembourgish: "sichen",
+    english: "to look for / to search",
+    type: "verb",
+    gender: null,
+    category: "verbs",
+    verbForms: {
+      present: { ech: "sichen", du: "sichs", hien: "sicht", mir: "sichen", dir: "sicht", si: "sichen" },
+      pastParticiple: "gesicht"
+    },
+    example: { lb: "Ech sichen meng Schlësselen.", en: "I'm looking for my keys." }
+  },
+
+  // === NEW NOUNS ===
+  {
+    id: 257,
+    luxembourgish: "Gefaangenen",
+    english: "prisoner",
+    type: "noun",
+    gender: "m",
+    category: "emergencies",
+    plural: "Gefaangenen",
+    example: { lb: "De Gefaangenen ass fortgelaf.", en: "The prisoner ran away." }
+  },
+  {
+    id: 258,
+    luxembourgish: "Rettung",
+    english: "rescue",
+    type: "noun",
+    gender: "f",
+    category: "emergencies",
+    plural: "Rettungen",
+    example: { lb: "D'Rettung war erfollegräich.", en: "The rescue was successful." }
+  },
+  {
+    id: 259,
+    luxembourgish: "Héichwaasser",
+    english: "flood / high water",
+    type: "noun",
+    gender: "n",
+    category: "nature",
+    plural: null,
+    example: { lb: "D'Héichwaasser huet vill Schued gemaach.", en: "The flood caused a lot of damage." }
+  },
+  {
+    id: 260,
+    luxembourgish: "Portmonni",
+    english: "purse / wallet",
+    type: "noun",
+    gender: "n",
+    category: "objects",
+    plural: "Portmonnien",
+    example: { lb: "Ech hunn mäi Portmonni verluer.", en: "I lost my wallet." }
+  },
+  {
+    id: 261,
+    luxembourgish: "Verkéier",
+    english: "traffic",
+    type: "noun",
+    gender: "m",
+    category: "transport",
+    plural: null,
+    example: { lb: "De Verkéier ass staark.", en: "The traffic is heavy." }
+  },
+  {
+    id: 262,
+    luxembourgish: "Congé",
+    english: "leave / vacation / holiday",
+    type: "noun",
+    gender: "m",
+    category: "work",
+    plural: "Congéen",
+    example: { lb: "Ech hunn Congé geholl.", en: "I took leave." }
+  },
+
+  // === NEW ADJECTIVES ===
+  {
+    id: 263,
+    luxembourgish: "doudeg",
+    english: "dead",
+    type: "adjective",
+    gender: null,
+    category: "emergencies",
+    example: { lb: "Den Déier ass doudeg.", en: "The animal is dead." }
+  },
+
+  // === NEW ADVERBS ===
+  {
+    id: 264,
+    luxembourgish: "ënnerwee",
+    english: "on the way / en route",
+    type: "adverb",
+    gender: null,
+    category: "adverbs",
+    example: { lb: "Ech sinn ënnerwee.", en: "I'm on my way." }
   }
 ];
 
